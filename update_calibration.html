@@ -1,0 +1,26 @@
+{% extends 'scheduler/base.html' %}
+
+{% block content %}
+<h2>Update Calibration</h2>
+
+<form method="POST">
+    {% csrf_token %}
+    
+    <!-- Machine Name (Read-Only) -->
+    <p><strong>Machine:</strong> {{ calibration.machine.name }}</p>
+
+    <!-- Date Picker (Updated to Remove Time Selection) -->
+    <label for="date"><strong>Date:</strong></label>
+    <input type="date" name="date" value="{{ calibration.date|date:'Y-m-d' }}" required><br><br>
+
+    <!-- Status Dropdown -->
+    <label><strong>Status:</strong></label>
+    <select name="status">
+        <option value="Scheduled" {% if calibration.status == "Scheduled" %}selected{% endif %}>Scheduled</option>
+        <option value="Completed" {% if calibration.status == "Completed" %}selected{% endif %}>Completed</option>
+        <option value="Pending" {% if calibration.status == "Pending" %}selected{% endif %}>Pending</option>
+    </select><br><br>
+
+    <button type="submit">Update</button>
+</form>
+{% endblock %}

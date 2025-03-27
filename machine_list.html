@@ -1,0 +1,10 @@
+{% extends 'scheduler/base.html' %}
+{% block content %}
+    <h2>Machines</h2>
+    <a href="{% url 'add_machine' %}">Add Machine</a>
+    <ul>
+        {% for machine in machines %}
+            <li><a href="{% url 'machine_detail' machine.pk %}">{{ machine.name }}</a></li>
+        {% endfor %}
+    </ul>
+{% endblock %}

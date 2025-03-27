@@ -1,0 +1,53 @@
+{% extends 'scheduler/base.html' %}
+{% block content %}
+
+<h2>Calibration Calendar</h2>
+
+<div id="calendar"></div>
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.3/main.min.css">
+<script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.3/main.min.js"></script>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        var calendarEl = document.getElementById('calendar');
+
+        const urlParams = new URLSearchParams(window.location.search);
+        let year = urlParams.get("year");
+        let month = urlParams.get("month");
+
+        const monthMap = {
+            "January": 0, "February": 1, "March": 2, "April": 3, "May": 4, "June": 5,
+            "July": 6, "August": 7, "September": 8, "October": 9, "November": 10, "December": 11
+        };
+
+        let monthNum = monthMap[month]; 
+
+      
+        if (monthNum === undefined) {
+            monthNum = new Date().getMonth();
+        }
+
+       
+        if (!year || isNaN(year)) {
+            year = new Date().getFullYear();
+        }
+
+      
+        let initialDate = new Date(year, monthNum, 1);
+
+        var calendar = new FullCalendar.Calendar(calendarEl, {
+            initialView: 'dayGridMonth',
+            initialDate: initialDate.toISOString().split("T")[0],  
+            events: "/get-calendar-events/",  
+            dateClick: function(info) {
+                alert('Selected date: ' + info.dateStr);
+            }
+        });
+
+        calendar.render();
+    });
+</script>
+
+
+{% endblock %}

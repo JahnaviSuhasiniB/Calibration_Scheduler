@@ -1,0 +1,62 @@
+{% extends "scheduler/base.html" %}
+
+{% block content %}
+<h1>Dashboard</h1>
+
+
+<form method="GET">
+    Machine:
+    <select name="machine">
+        <option value="all">All</option>
+    
+    </select>
+
+    Status:
+    <select name="status">
+        <option value="all">All</option>
+        <option value="Scheduled">Scheduled</option>
+        <option value="Completed">Completed</option>
+    </select>
+
+    Year:
+    <select name="year">
+        <option value="all">All</option>
+        {% for year in years %}
+        <option value="{{ year }}">{{ year }}</option>
+        {% endfor %}
+    </select>
+
+    Month:
+    <select name="month">
+        <option value="all">All</option>
+        {% for month in months %}
+        <option value="{{ month }}">{{ month }}</option>
+        {% endfor %}
+    </select>
+
+    <button type="submit">Filter</button>
+</form>
+
+<!-- Calendar Section -->
+<h2>Calibration Calendar</h2>
+<div id="calendar"></div>
+
+<!-- FullCalendar CSS -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/5.11.3/main.min.css" rel="stylesheet">
+
+<!-- FullCalendar JS -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/5.11.3/main.min.js"></script>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    var calendarEl = document.getElementById('calendar');
+    var calendar = new FullCalendar.Calendar(calendarEl, {
+        initialView: 'dayGridMonth',
+        events: '/api/calendar/events/', 
+        eventColor: '#0078D7', 
+    });
+    calendar.render();
+});
+</script>
+
+{% endblock %}

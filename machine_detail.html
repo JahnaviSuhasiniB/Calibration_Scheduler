@@ -1,0 +1,21 @@
+{% extends 'scheduler/base.html' %}
+{% block content %}
+<h2>{{ machine.name }}</h2>
+<p>Type: {{ machine.type }}</p>
+<p>Location: {{ machine.location }}</p>
+
+<h3>Calibrations</h3>
+<ul>
+    {% for calibration in machine.calibration_set.all %}
+        <li>
+            {{ calibration.date }} - {{ calibration.status }} - Assigned to: {{ calibration.assigned_user }}
+        </li>
+    {% empty %}
+        <li>No calibrations scheduled.</li>
+    {% endfor %}
+</ul>
+
+<a href="{% url 'schedule_calibration' %}">📅 Schedule Calibration</a>
+<a href="{% url 'edit_machine' machine.id %}">✏️ Edit</a>
+<a href="{% url 'delete_machine' machine.id %}">🗑️ Delete</a>
+{% endblock %}

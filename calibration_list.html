@@ -1,0 +1,22 @@
+{% extends 'scheduler/base.html' %}
+
+{% block content %}
+<h2>Calibration Schedule</h2>
+
+<a href="{% url 'schedule_calibration' %}" style="color: purple; text-decoration: none; font-weight: bold;">
+    ➕ Schedule Calibration
+</a>
+
+<ul>
+    {% for calibration in calibrations %}
+        <li>
+            {{ calibration.machine.name }} - {{ calibration.date|date:"F j, Y" }} - {{ calibration.status }}
+            <a href="{% url 'update_calibration' calibration.id %}" style="color: blue; text-decoration: none;">
+                <span style="font-size: 16px;">✏️</span> Update
+            </a>
+        </li>
+    {% empty %}
+        <li>No calibrations scheduled.</li>
+    {% endfor %}
+</ul>
+{% endblock %}

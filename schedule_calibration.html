@@ -1,0 +1,26 @@
+{% extends 'scheduler/base.html' %}
+{% block content %}
+    <h2>Schedule Calibration</h2>
+    <form method="POST">
+        {% csrf_token %}
+        <label>Machine:</label>
+        <select name="machine">
+            {% for machine in machines %}
+                <option value="{{ machine.id }}">{{ machine.name }}</option>
+            {% endfor %}
+        </select>
+
+        <label>Date:</label>
+        <input type="date" name="date" required>
+
+        <label>Assign To:</label>
+        <select name="assigned_user">
+            <option value="">None</option>
+            {% for user in users %}
+                <option value="{{ user.id }}">{{ user.username }}</option>
+            {% endfor %}
+        </select>
+
+        <button type="submit">Schedule</button>
+    </form>
+{% endblock %}

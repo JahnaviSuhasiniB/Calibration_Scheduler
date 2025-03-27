@@ -1,0 +1,11 @@
+{% extends 'scheduler/base.html' %}
+
+{% block content %}
+<h2>Delete Machine</h2>
+<p>Are you sure you want to delete "{{ machine.name }}"?</p>
+<form method="POST">
+    {% csrf_token %}
+    <button type="submit">Yes, Delete</button>
+    <a href="{% url 'machine_list' %}">Cancel</a>
+</form>
+{% endblock %}
